@@ -1,0 +1,11 @@
+{
+"name": "hello-world-nodejs",
+"main": "index.js",
+"dependencies":
+ {
+	"express”: "^4.17.1"
+ },
+"scripts": {
+	"start": "node index.js"
+}
+}

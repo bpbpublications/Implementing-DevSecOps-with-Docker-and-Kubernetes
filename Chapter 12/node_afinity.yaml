@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+name: ubuntu
+spec:
+affinity:
+nodeAffinity:
+preferredDuringSchedulingIgnoredDuringExecution:
+  - weight: 2
+preference:
+matchExpressions:
+  - key: disktype
+operator: In
+values:
+  - ssd
+containers:
+  - name: ubuntu
+image: ubuntu
+imagePullPolicy: IfNotPresent

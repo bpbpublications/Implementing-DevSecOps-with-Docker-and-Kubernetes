@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: mypostgres
+        image: postgres
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-user-pass
+              key: username.txt
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+             secretKeyRef:
+              name: db-user-pass
+              key: password.txt
+        volumeMounts:
+          - name: postgres-data
+            mountPath: /var/lib/postgresql/data
+            subPath: postgres
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: azure-managed-disk
